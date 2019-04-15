@@ -6,7 +6,7 @@
 
 module "image" {
   source = "./image"
-  image = "${var.image}"
+  image = "${lookup(var.image, var.env)}"
 }
 
 # Start the Container
@@ -23,7 +23,7 @@ module "container" {
   source = "./container"
 # Main.tf is intermediary between image and containers modules, providing output from i to c 
   image = "${module.image.image_out}"
-  uniq_container_name = "${var.uniq_container_name}"
-  int_port = "${var.int_port}"
-  ext_port = "${var.ext_port}"
+  uniq_container_name = "${lookup(var.uniq_container_name, var.env)}"
+  int_port = "${lookup(var.int_port, var.env)}"
+  ext_port = "${lookup(var.ext_port, var.env)}"
 }
